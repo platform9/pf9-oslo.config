@@ -2866,6 +2866,17 @@ class ConfigOpts(abc.Mapping):
             except KeyError:  # nosec: Valid control flow instruction
                 pass
         value, loc = self._do_get(name, group, namespace)
+        # PF9 addition for encrypted passwords
+        str_val = str(value)
+        # Encrypted Password start with 'secret://' decrypt it 
+        if ('secret://' in str_val):
+            secret_id = str_val.split('secret://')[1]
+            for source in self._sources:
+                val = source.get(group_name = None, name = None,opt = secret_id)
+                if val[0] != sources._NoValue:
+                    value = val[0]
+                    self.__drivers_cache[key] = value
+                    break
         self.__cache[key] = value
         return value
 
