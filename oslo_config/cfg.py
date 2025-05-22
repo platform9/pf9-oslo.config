@@ -2872,7 +2872,7 @@ class ConfigOpts(abc.Mapping):
         if ('secret://' in str_val):
             secret_id = str_val.split('secret://')[1]
             for source in self._sources:
-                val = source.get(group_name = None, name = None,opt = secret_id)
+                val = source.get(None, None,opt = secret_id)
                 if val[0] != sources._NoValue:
                     value = val[0]
                     self.__drivers_cache[key] = value
