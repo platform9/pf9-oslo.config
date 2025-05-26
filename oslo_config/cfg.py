@@ -2869,7 +2869,7 @@ class ConfigOpts(abc.Mapping):
         # PF9 addition for encrypted passwords
         str_val = str(value)
         # Encrypted Password start with 'secret://' decrypt it 
-        if ('secret://' in str_val):
+        if str_val.startswith('secret://'):
             secret_id = str_val.split('secret://')[1]
             for source in self._sources:
                 val = source.get(None, None,opt = secret_id)
